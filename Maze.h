@@ -37,6 +37,8 @@ class Maze{
 		bool isInside(const Point &p) const;
 		bool existsWall(const Point &p,Direction d) const;
 
+		void setWall(const Point &p,Direction d,bool exists);
+
 		std::string toString() const;
 
 		static Maze *load(std::istream &data);

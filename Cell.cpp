@@ -19,3 +19,12 @@ bool Cell::existsWall(Direction d) const{
 			return false;
 	}
 }
+Cell Cell:cellBySetWall(Direction d,bool exists){
+	switch(d){
+		case DirectionLeft:return Cell(exists,topWall());
+		case DirectionTop:return Cell(leftWall(),exists);
+		default:
+			fprintf(stderr,"invalid direction in %s\n",__PRETTY_FUNCTION__);
+			return Cell();
+	}
+}

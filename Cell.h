@@ -16,6 +16,9 @@ class Cell{
 		bool leftWall() const;
 		bool topWall() const;
 		bool existsWall(Direction d) const;
+
+		Cell cellBySetWall(Direction d,bool exists);
 };
+
 
 

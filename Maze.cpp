@@ -41,13 +41,28 @@ bool Maze::existsWall(const Point &p,Direction d) const{
 			if(isInside(p)){
 				return constCellAt(p).existsWall(d);
 			}
-			return false;		
+			return true;		
 			break;
 		case DirectionRight:
 		case DirectionBottom:
 			return existsWall(p.neighbor(d),DirectionReverse(d));
 	}
 }
+void Maze::setWall(const Point &p,Direction d,bool exists){
+	switch(d){
+		case DirectionLeft:
+		case DirectionTop:
+			if(isInside(p)){
+				cellAt(p)=cellAt(p).cellBySetWall(d,exists);
+			}
+			break;
+		case DirectionRight:
+		case DirectionBottom:
+			return setWall(p.neighbor(d),DirectionReverse(d));
+	}
+}
+
+
 Maze *Maze::load(std::istream &data){
 	std::string line;
 	char buf[256];
