@@ -29,6 +29,25 @@ Cell &Maze::cellAt(const Point &pos){
 const Cell &Maze::constCellAt(const Point &pos) const{
 	return m_cells[pos.y*m_width+pos.x];
 }
+bool Maze::isInside(const Point &p) const{
+	return (0<=p.x && p.x<m_width && 0<=p.y && p.y<m_height);
+}
+
+//こういうの気持ち良い
+bool Maze::existsWall(const Point &p,Direction d) const{
+	switch(d){
+		case DirectionLeft:
+		case DirectionTop:
+			if(isInside(p)){
+				return constCellAt(p).existsWall(d);
+			}
+			return false;		
+			break;
+		case DirectionRight:
+		case DirectionBottom:
+			return existsWall(p.neighbor(d),DirectionReverse(d));
+	}
+}
 Maze *Maze::load(std::istream &data){
 	std::string line;
 	char buf[256];
@@ -56,9 +75,7 @@ Maze *Maze::load(std::istream &data){
 			if(token==NULL)goto fail;
 			int value=strtol(token,NULL,16);
 
-			Cell cell;
-			cell.leftWall=value & 0x8;
-			cell.topWall=value & 0x1;
+			Cell cell(value & 0x8,value & 0x1);
 			
 			maze->cellAt(pos)=cell;
 			
@@ -91,7 +108,7 @@ std::string Maze::toString() const{
 	for(int y=0;y<m_height;y++){
 		for(int x=0;x<m_width;x++){
 			Cell cell=constCellAt(Point(x,y));
-			if(cell.topWall){
+			if(cell.topWall()){
 				str.append("+---");
 			}else{
 				str.append("+   ");
@@ -101,7 +118,7 @@ std::string Maze::toString() const{
 		for(int x=0;x<m_width;x++){
 			Point pos=Point(x,y);
 			Cell cell=constCellAt(pos);
-			if(cell.leftWall){
+			if(cell.leftWall()){
 				str.append("|");
 			}else{
 				str.append(" ");

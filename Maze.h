@@ -10,6 +10,7 @@
 
 #include "Point.h"
 #include "Cell.h"
+#include "Direction.h"
 
 class Maze{
 	//C++のフィールドってプレフィックス付けないとローカル変数と衝突しませんか？
@@ -32,6 +33,9 @@ class Maze{
 		
 		Cell &cellAt(const Point &pos);
 		const Cell &constCellAt(const Point &pos) const;
+
+		bool isInside(const Point &p) const;
+		bool existsWall(const Point &p,Direction d) const;
 
 		std::string toString() const;
 
