@@ -1,4 +1,5 @@
 CFLAGS += -Wall -Wextra -Werror
+LDFLAGS += -lncurses
 OBJS = 	Point.o \
 		Direction.o \
 		Cell.o \
@@ -9,10 +10,10 @@ OBJS = 	Point.o \
 all : MazeView ManualMouse
 
 MazeView : MazeView.o  $(OBJS) 
-	$(CXX) $(CFLAGS) MazeView.o $(OBJS) -o $@.out
+	$(CXX) $(CFLAGS) $(LDFLAGS) MazeView.o $(OBJS) -o $@.out
 
 ManualMouse : ManualMouse.o $(OBJS)
-	$(CXX) $(CFLAGS) ManualMouse.o $(OBJS) -o $@.out
+	$(CXX) $(CFLAGS) $(LDFLAGS) ManualMouse.o $(OBJS) -o $@.out
 
 clean :
 	rm -f *.o *.out

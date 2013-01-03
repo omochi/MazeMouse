@@ -38,5 +38,5 @@ class Mouse{
 		void goStraight();
 		//一発で反対側を向くのは無理とする
 		void turnRight();
-		void turnLeft();	
+		void turnLeft();
 };
