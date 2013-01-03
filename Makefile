@@ -6,14 +6,13 @@ OBJS = 	Point.o \
 		Mouse.o \
 		Viewer.o \
 
-
-all : MazeView
+all : MazeView ManualMouse
 
 MazeView : MazeView.o  $(OBJS) 
-	$(CXX) $(CFLAGS) MazeView.o $(OBJS) -o $@
+	$(CXX) $(CFLAGS) MazeView.o $(OBJS) -o $@.app
 
 ManualMouse : ManualMouse.o $(OBJS)
-	$(CXX) $(CFLAGS) ManualMouse.o $(OBJS) -o $@
+	$(CXX) $(CFLAGS) ManualMouse.o $(OBJS) -o $@.app
 
 clean :
 	rm -f *.o 

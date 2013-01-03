@@ -28,14 +28,15 @@ int main(int argc,char *argv[]){
 	}
 
 	Viewer viewer;
-	Maze *maze = Maze::load(std::ifstream(argv[1]));
+	std::ifstream ifs(argv[1]);
+	Maze *maze = Maze::load(ifs);
 	if(maze==NULL){
 		printf("load error\n");
 		return EXIT_FAILURE;
 	}
 	Mouse mouse(*maze);
 
-	printf("%s\n",viewer.printWorld(*maze,&mouse));
+	printf("%s\n",viewer.printWorld(*maze,&mouse).c_str());
 
 	delete maze;
 }
