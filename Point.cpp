@@ -19,3 +19,15 @@ Point Point::neighbor(Direction d) const{
 			return Point();
 	}
 }
+
+
+bool Point::operator<(const Point &p) const{
+	if(y != p.y)return y<p.y;
+	return x < p.x;
+}
+
+std::string Point::toString() const{
+	char buf[256];
+	snprintf(buf,sizeof(buf),"(%d,%d)",x,y);
+	return std::string(buf);
+}

@@ -8,6 +8,8 @@
 #include "Maze.h"
 #include "Mouse.h"
 #include "Viewer.h"
+#include "MazeCellNode.h"
+#include "MazePathSearcher.h"
 
 std::string path;
 
@@ -70,11 +72,22 @@ int windowMain(){
 
 		}
 		firstFrame=false;
-			
+		
+		MazePathSearcher searcher(mouse.learnedMaze(),mouse.pos(),mouse.learnedMaze().goal());
+		const MazeCellNode * goal = dynamic_cast<const MazeCellNode *>(searcher.goal());	
+
+		clear();
 		move(0,0);
-		printw("%s\n",viewer.printWorld(mouse.learnedMaze(),&mouse).c_str());
+		printw("%s\n",viewer.printWorld(mouse.learnedMaze(),&mouse,searcher.foundCellNodePath()).c_str());
 
 		printw("move:hjkl,quit:q\n");
+
+		if(searcher.found()){
+			printw("path found\n");
+			printw("%s\n",searcher.foundPathToString(searcher.foundCellNodePath()).c_str());
+		}else{
+			printw("path not found\n");
+		}
 
 		refresh();
 	}

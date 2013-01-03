@@ -1,19 +1,23 @@
 CFLAGS += -Wall -Wextra -Werror
-LDFLAGS += -lncurses
+LIBS += -lncurses
 OBJS = 	Point.o \
 		Direction.o \
 		Cell.o \
 		Maze.o \
 		Mouse.o \
-		Viewer.o \
+		PathNode.o \
+		PathSearcher.o \
+		MazeCellNode.o \
+		MazePathSearcher.o \
+		Viewer.o 	
 
 all : MazeView ManualMouse
 
 MazeView : MazeView.o  $(OBJS) 
-	$(CXX) $(CFLAGS) $(LDFLAGS) MazeView.o $(OBJS) -o $@.out
+	$(CXX) $(CFLAGS) $(LDFLAGS) MazeView.o $(OBJS) $(LIBS) -o $@.out
 
 ManualMouse : ManualMouse.o $(OBJS)
-	$(CXX) $(CFLAGS) $(LDFLAGS) ManualMouse.o $(OBJS) -o $@.out
+	$(CXX) $(CFLAGS) $(LDFLAGS) ManualMouse.o $(OBJS) $(LIBS) -o $@.out
 
 clean :
 	rm -f *.o *.out
