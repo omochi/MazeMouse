@@ -1,9 +1,9 @@
 #include "Mouse.h"
 
-Mouse::Mouse(const Maze &physicalMaze):m_physicalMaze(&physicalMaze),
+Mouse::Mouse(const Maze &physicalMaze):
+	m_physicalMaze(&physicalMaze),
 	m_learnedMaze(new Maze(physicalMaze.width(),physicalMaze.height())){
-	
-	m_pos=Point(0,0);
+	m_pos=physicalMaze.start();	
 	m_direction=DirectionTop;
 }
 
