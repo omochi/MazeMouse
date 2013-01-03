@@ -19,8 +19,9 @@ int main(int argc,char *argv[]){
 				break;
 		}
 	}
-	argc -= optind;
-	argv += optind;
+	argc -= optind-1;
+	argv += optind-1;
+
 
 	if(argc < 2 || optError){
 		printf("usage: %s file\n",arg0);
