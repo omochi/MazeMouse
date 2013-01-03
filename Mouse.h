@@ -32,7 +32,7 @@ class Mouse{
 		const Point &pos() const;
 		Direction direction() const;
 
-		const Maze * learnedMaze() const;
+		const Maze &learnedMaze() const;
 
 		//制御
 		void goStraight();

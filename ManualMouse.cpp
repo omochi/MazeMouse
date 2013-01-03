@@ -37,7 +37,7 @@ int main(int argc,char *argv[]){
 	}
 	Mouse mouse(*maze);
 
-	printf("%s\n",viewer.printWorld(*maze,&mouse).c_str());
+	printf("%s\n",viewer.printWorld(mouse.learnedMaze(),&mouse).c_str());
 
 	delete maze;
 }

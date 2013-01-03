@@ -1,10 +1,15 @@
 #include "Maze.h"
-#include "Cell.h"
-#include "Point.h"
 
 Maze::Maze(int width,int height):m_width(width),m_height(height),
 	m_cells(std::vector<Cell>(width*height)){
+	for(int i=0;i<width;i++){
+		cellAt(Point(i,0))=cellAt(Point(i,0)).cellBySetWall(DirectionTop,true);
+	}
+	for(int i=0;i<height;i++){
+		cellAt(Point(0,i))=cellAt(Point(0,i)).cellBySetWall(DirectionLeft,true);
+	}
 }
+
 int Maze::width() const{
 	return m_width;
 }

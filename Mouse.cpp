@@ -3,8 +3,11 @@
 Mouse::Mouse(const Maze &physicalMaze):
 	m_physicalMaze(&physicalMaze),
 	m_learnedMaze(new Maze(physicalMaze.width(),physicalMaze.height())){
+	
 	m_pos=physicalMaze.start();	
 	m_direction=DirectionTop;
+	m_learnedMaze->setStart(physicalMaze.start());
+	m_learnedMaze->setGoal(physicalMaze.goal());
 }
 
 Mouse::~Mouse(){
@@ -22,8 +25,8 @@ const Point &Mouse::pos() const{
 Direction Mouse::direction() const{
 	return m_direction;
 }
-const Maze * Mouse::learnedMaze() const{
-	return m_learnedMaze;
+const Maze &Mouse::learnedMaze() const{
+	return *m_learnedMaze;
 }
 
 void Mouse::goStraight(){
