@@ -1,12 +1,13 @@
 CFLAGS += -Wall -Wextra -Werror
-OBJS = MazeMouse.o \
-	   Point.o \
+OBJS = Point.o \
 	   Direction.o \
 	   Cell.o \
 	   Maze.o \
 
 
-MazeMouse : $(OBJS) 
-	$(CXX) $(CFLAGS) $(OBJS) -o $@
+all : MazeView
+
+MazeView : MazeView.o  $(OBJS) 
+	$(CXX) $(CFLAGS) MazeView.o $(OBJS) -o $@
 clean :
 	rm -f *.o 
