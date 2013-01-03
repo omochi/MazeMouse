@@ -9,10 +9,11 @@ OBJS = 	Point.o \
 all : MazeView ManualMouse
 
 MazeView : MazeView.o  $(OBJS) 
-	$(CXX) $(CFLAGS) MazeView.o $(OBJS) -o $@.app
+	$(CXX) $(CFLAGS) MazeView.o $(OBJS) -o $@.out
 
 ManualMouse : ManualMouse.o $(OBJS)
-	$(CXX) $(CFLAGS) ManualMouse.o $(OBJS) -o $@.app
+	$(CXX) $(CFLAGS) ManualMouse.o $(OBJS) -o $@.out
 
 clean :
-	rm -f *.o 
+	rm -f *.o *.out
+
