@@ -1,6 +1,6 @@
 #include "Mouse.h"
 
-Mouse::Mouse(const Maze &physicalMaze):m_physhicalMaze(&physicalMaze),
+Mouse::Mouse(const Maze &physicalMaze):m_physicalMaze(&physicalMaze),
 	m_learnedMaze(new Maze(physicalMaze.width(),physicalMaze.height())){
 	
 	m_pos=Point(0,0);
@@ -16,7 +16,7 @@ void Mouse::learnMaze(){
 	m_learnedMaze->setWall(m_pos,m_direction,wall);
 }
 
-const Pos &Mouse::pos() const{
+const Point &Mouse::pos() const{
 	return m_pos;
 }
 Direction Mouse::direction() const{
@@ -26,18 +26,18 @@ const Maze * Mouse::learnedMaze() const{
 	return m_learnedMaze;
 }
 
-void Maze::goFront(){
+void Mouse::goStraight(){
 	if(!m_physicalMaze->existsWall(m_pos,m_direction)){
 		//壁がなければ進めます
 		m_pos=m_pos.neighbor(m_direction);
 	}
 	learnMaze();
 }
-void Maze::turnLeft(){
+void Mouse::turnLeft(){
 	m_direction=DirectionRotate(m_direction,DirectionLeft);
 	learnMaze();
 }
-void Maze::turnRight(){
+void Mouse::turnRight(){
 	m_direction=DirectionRotate(m_direction,DirectionRight);
 	learnMaze();
 }

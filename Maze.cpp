@@ -58,7 +58,7 @@ void Maze::setWall(const Point &p,Direction d,bool exists){
 			break;
 		case DirectionRight:
 		case DirectionBottom:
-			return setWall(p.neighbor(d),DirectionReverse(d));
+			return setWall(p.neighbor(d),DirectionReverse(d),exists);
 	}
 }
 
@@ -94,17 +94,16 @@ Maze *Maze::load(std::istream &data){
 			
 			maze->cellAt(pos)=cell;
 			
-			//ここでしか使わないので直に書いちゃう
-			if(value & 0x20){
-				maze->setStart(pos);				
-			}
-			if(value & 0x40){
-				maze->setGoal(pos);
-			}
-			
 			token=strtok(NULL," ");
 		}
 	}
+
+	//データファイルにはスタートとゴールかかれてないらしい。
+	//とりあえずデフォルトの場所をルールに合わせて設定するようにする。
+	
+	maze->setStart(Point(0,height-1));
+	maze->setGoal(Point(width/2,height/2));
+
 
 	return maze;
 

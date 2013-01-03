@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include "Maze.h"
+#include "Viewer.h"
 
 int main(int argc,char *argv[]){
 	char *arg0=argv[0];
@@ -26,6 +27,8 @@ int main(int argc,char *argv[]){
 		return EXIT_FAILURE;
 	}
 
+	Viewer viewer;
+
 	for(int i=1;i<argc;i++){
 		char *path=argv[i];
 		printf("file:%s\n",path);
@@ -35,7 +38,9 @@ int main(int argc,char *argv[]){
 			printf("load error\n");
 			continue;
 		}
-		printf("%s\n",maze->toString().c_str());
+		
+		printf("%s\n",viewer.printWorld(*maze,NULL).c_str());
+
 		delete maze;
 	}
 

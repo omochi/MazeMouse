@@ -28,14 +28,14 @@ class Mouse{
 		void learnMaze();
 	public:
 		Mouse(const Maze &physicalMaze);
-		virtual Mouse~();
-		const Pos &pos() const;
+		virtual ~Mouse();
+		const Point &pos() const;
 		Direction direction() const;
 
 		const Maze * learnedMaze() const;
 
 		//制御
-		void goFront();
+		void goStraight();
 		//一発で反対側を向くのは無理とする
 		void turnRight();
 		void turnLeft();	

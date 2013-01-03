@@ -19,7 +19,7 @@ bool Cell::existsWall(Direction d) const{
 			return false;
 	}
 }
-Cell Cell:cellBySetWall(Direction d,bool exists){
+Cell Cell::cellBySetWall(Direction d,bool exists) const{
 	switch(d){
 		case DirectionLeft:return Cell(exists,topWall());
 		case DirectionTop:return Cell(leftWall(),exists);

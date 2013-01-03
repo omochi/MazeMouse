@@ -4,7 +4,7 @@ Direction DirectionReverse(Direction d){
 	return DirectionRotate(d,DirectionBottom);
 }
 Direction DirectionRotateLeft(Direction d){
-	switch(r){
+	switch(d){
 		case DirectionLeft:return DirectionBottom;
 		case DirectionTop:return DirectionLeft;
 		case DirectionRight:return DirectionTop;
