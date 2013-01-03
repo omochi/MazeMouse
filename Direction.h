@@ -10,3 +10,6 @@ typedef enum Direction{
 }Direction;
 
 Direction DirectionReverse(Direction d);
+
+//dをr方向に向けたらどっち向きか(Topを前、Bottomを後ろとみなす)
+Direction DirectionRotate(Direction d,Direction r);
