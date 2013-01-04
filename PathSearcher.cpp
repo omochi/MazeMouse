@@ -3,7 +3,7 @@
 #include "PathNode.h"
 #include "Log.h"
 
-PathSearcher::PathSearcher(){
+PathSearcher::PathSearcher():m_start(NULL),m_goal(NULL){
 }
 
 PathSearcher::~PathSearcher(){

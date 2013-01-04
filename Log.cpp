@@ -2,6 +2,9 @@
 
 Log Log::main = Log();
 
+Log::Log():m_buf(),m_os(NULL){
+}
+
 void Log::open(std::ostream &os){
 	m_os = &os;
 }
