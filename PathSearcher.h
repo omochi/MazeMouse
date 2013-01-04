@@ -4,6 +4,7 @@
 class PathNode;
 
 //コンストラクタでAStar探索を実行する
+//もう一度検索するにはreleaseを呼んでください。
 class PathSearcher{
 	private:
 		PathNode *m_start;

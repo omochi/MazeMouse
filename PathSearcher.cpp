@@ -10,6 +10,7 @@ PathSearcher::~PathSearcher(){
 	release();
 }
 
+
 void PathSearcher::release(){
 	m_start=NULL;
 	m_goal=NULL;
@@ -55,7 +56,7 @@ void PathSearcher::searchShortestPath(PathNode &start,PathNode &goal){
 		step++;
 	}
 
-	snprintf(buf,sizeof(buf),"search step:%d,max list count:%d",step,maxListCount);
+	snprintf(buf,sizeof(buf),"search step:%d,max list count:%d\n",step,maxListCount);
 	Log::main.add(buf);
 
 	return;	

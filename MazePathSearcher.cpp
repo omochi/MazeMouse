@@ -32,9 +32,11 @@ MazeCellNode & MazePathSearcher::nodeAtPoint(const Point &pos) {
 }
 
 void MazePathSearcher::searchShortestPath(const Maze *maze,const Point &start,const Point &goal){
-	release();
+	char buf[256];
 	m_maze = maze;
 	PathSearcher::searchShortestPath(nodeAtPoint(start),nodeAtPoint(goal));
+	snprintf(buf,sizeof(buf),"node count:%ld\n",m_nodes.size());
+	Log::main.add(buf);
 }
 
 std::vector<MazeCellNode *> MazePathSearcher::foundCellNodePath() const{

@@ -116,6 +116,10 @@ int windowMain(){
 
 		printw("%s\n",Log::main.buf().c_str());
 		Log::main.clear();
+		
+		//検索結果の解放
+		searcher.release();
+
 
 		//画面の保存
 		snprintf(buf,sizeof(buf),"frame=%d\n",frameCount);
