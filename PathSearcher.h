@@ -8,16 +8,16 @@ class PathSearcher{
 	private:
 		PathNode *m_start;
 		PathNode *m_goal;
-	protected:
-		//継承先のコンストラクタで呼んで
-		void searchShortestPath(PathNode &start,PathNode &goal);
 	public:
 		PathSearcher();
 		virtual ~PathSearcher();
+		virtual void release();
 
 		PathNode *start() const;
 		PathNode *goal() const;
 		bool found() const;
+
+		virtual void searchShortestPath(PathNode &start,PathNode &goal);
 		std::vector<PathNode *>foundPath() const;
 };
 

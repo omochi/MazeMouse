@@ -48,6 +48,8 @@ int windowMain(){
 		return EXIT_FAILURE;
 	}
 	Mouse mouse(*maze);
+	MazePathSearcher searcher;
+	searcher.m_estimateEnabled = true;
 
 	char buf[256];
 	int frameCount = 0;
@@ -80,26 +82,20 @@ int windowMain(){
 			mouse.moveWithDirection(moveDirection);
 		}
 		
-		MazePathSearcher searcher(mouse.learnedMaze(),mouse.pos(),mouse.learnedMaze().goal(),true);
-		const MazeCellNode * goal = dynamic_cast<const MazeCellNode *>(searcher.goal());	
+		searcher.searchShortestPath(&mouse.learnedMaze(),mouse.pos(),mouse.learnedMaze().goal());
 
+		
+		//画面描画
 		clear();
 		move(0,0);
 		printw("%s\n",viewer.printWorld(mouse.learnedMaze(),&mouse,searcher.foundCellNodePath()).c_str());
 
 		printw("move:hjkl,quit:q\n");
 
-//		if(searcher.found()){
-//			printw("path found\n");
-//			printw("%s\n",searcher.foundPathToString(searcher.foundCellNodePath()).c_str());
-//		}else{
-//			printw("path not found\n");
-//		}
-		
-//		printw("log\n");
 		printw("%s\n",Log::main.buf().c_str());
 		Log::main.clear();
 
+		//画面の保存
 		snprintf(buf,sizeof(buf),"frame=%d\n",frameCount);
 
 		dumpOfs << buf;

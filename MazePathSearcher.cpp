@@ -3,17 +3,22 @@
 #include <stdlib.h>
 #include "MazeCellNode.h"
 #include "Log.h"
-MazePathSearcher::MazePathSearcher(const Maze &maze,const Point &start,const Point &goal,bool estimateEnabled):
-	m_maze(maze),m_estimateEnabled(estimateEnabled){
-	searchShortestPath(nodeAtPoint(start),nodeAtPoint(goal));
+MazePathSearcher::MazePathSearcher():
+	m_maze(NULL),m_estimateEnabled(false){
 }
 MazePathSearcher::~MazePathSearcher(){
+}
+
+void MazePathSearcher::release(){
+	m_maze=NULL;
 	for(std::map<Point,MazeCellNode *>::iterator it=m_nodes.begin();it!=m_nodes.end();it++){
 		delete (*it).second;
 	}
+	m_nodes.clear();
+	PathSearcher::release();
 }
 
-const Maze & MazePathSearcher::maze() const{
+const Maze * MazePathSearcher::maze() const{
 	return m_maze;
 }
 
@@ -24,6 +29,12 @@ MazeCellNode & MazePathSearcher::nodeAtPoint(const Point &pos) {
 		m_nodes.insert(std::pair<Point,MazeCellNode *>(pos,cellNode));	
 	}
 	return *m_nodes[pos];
+}
+
+void MazePathSearcher::searchShortestPath(const Maze *maze,const Point &start,const Point &goal){
+	release();
+	m_maze = maze;
+	PathSearcher::searchShortestPath(nodeAtPoint(start),nodeAtPoint(goal));
 }
 
 std::vector<MazeCellNode *> MazePathSearcher::foundCellNodePath() const{

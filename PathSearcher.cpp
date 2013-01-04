@@ -6,6 +6,15 @@
 PathSearcher::PathSearcher(){
 }
 
+PathSearcher::~PathSearcher(){
+	release();
+}
+
+void PathSearcher::release(){
+	m_start=NULL;
+	m_goal=NULL;
+} 
+
 //AStar探索？
 void PathSearcher::searchShortestPath(PathNode &start,PathNode &goal){
 	char buf[1024];
@@ -57,9 +66,6 @@ void PathSearcher::searchShortestPath(PathNode &start,PathNode &goal){
 	Log::main.add(buf);
 
 	return;	
-}
-
-PathSearcher::~PathSearcher(){
 }
 
 PathNode *PathSearcher::start() const{
