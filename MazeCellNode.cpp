@@ -13,7 +13,7 @@ std::vector<PathNode *> MazeCellNode::neighbors() {
 
 	Direction direction=DirectionLeft;
 	for(int i=0;i<4;i++){
-		if(!mazeSearcher().maze().existsWall(pos,direction)){
+		if(!mazeSearcher().maze()->existsWall(pos,direction)){
 			neighbors.push_back(&mazeSearcher().nodeAtPoint(pos.neighbor(direction)));
 		}
 		direction=DirectionRotate(direction,DirectionLeft);

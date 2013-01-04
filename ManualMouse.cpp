@@ -15,6 +15,7 @@
 
 std::string path;
 std::ofstream dumpOfs;
+bool autoDriven;
 
 Direction keyToDirection(char k){
 	switch(k){
@@ -63,19 +64,38 @@ int windowMain(){
 	while(!terminate){
 		doMove=false;
 
-		int ch=getch();
-		switch(ch){
-			case ERR:
-			case 'q':
-				terminate=true;
-				break;
-			case 'h':
-			case 'j':
-			case 'k':
-			case 'l':
+		if(autoDriven){
+			//自動走行
+			std::vector<MazeCellNode *> path = searcher.foundCellNodePath();
+			if(mouse.pos().equals(maze->goal())){
+				Log::main.add("auto drive finished\n");
+				terminate = true;	
+			}else if(path.size()>=2){
 				doMove=true;
-				moveDirection=keyToDirection(ch);
-				break;
+				moveDirection=path[0]->pos.directionTo(path[1]->pos);
+			}else{
+				if(frameCount>0){
+					//0フレーム目だけは空打ち
+					Log::main.add("auto drive path not found\n");
+					terminate = true;
+				}
+			}
+		}else{
+			//手動走行
+			int ch=getch();
+			switch(ch){
+				case ERR:
+				case 'q':
+					terminate=true;
+					break;
+				case 'h':
+				case 'j':
+				case 'k':
+				case 'l':
+					doMove=true;
+					moveDirection=keyToDirection(ch);
+					break;
+			}
 		}
 
 		if(doMove){
@@ -116,10 +136,14 @@ int main(int argc,char *argv[]){
 	char *arg0=argv[0];
 	char ch;
 	bool optError=false;
-	while((ch=getopt(argc,argv,""))!=-1){
+	autoDriven=false;
+	while((ch=getopt(argc,argv,"a"))!=-1){
 		switch(ch){
 			case '?':
 				optError=true;
+				break;
+			case 'a':
+				autoDriven=true;
 				break;
 		}
 	}
@@ -128,7 +152,8 @@ int main(int argc,char *argv[]){
 
 
 	if(argc < 2 || optError){
-		printf("usage: %s file\n",arg0);
+		printf("usage : %s [-a] file\n",arg0);
+		printf("   -a : auto driven\n");
 		return EXIT_FAILURE;
 	}
 

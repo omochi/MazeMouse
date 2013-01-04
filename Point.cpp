@@ -20,6 +20,13 @@ Point Point::neighbor(Direction d) const{
 	}
 }
 
+Direction Point::directionTo(const Point &p) const{
+	if(p.x < x)return DirectionLeft;
+	if(p.y < y)return DirectionTop;
+	if(p.x > x)return DirectionRight;
+	if(p.y > y)return DirectionBottom;
+	return DirectionLeft;
+}
 
 bool Point::operator<(const Point &p) const{
 	if(y != p.y)return y<p.y;

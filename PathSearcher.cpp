@@ -33,13 +33,6 @@ void PathSearcher::searchShortestPath(PathNode &start,PathNode &goal){
 	int maxListCount = 0;
 
 	while(list.size()>0){
-		//snprintf(buf,sizeof(buf),"search step %03d:",step);
-		//Log::main.add(buf);
-		//for(std::vector<PathNode *>::iterator it = list.begin();
-		//		it!=list.end();it++){
-		//	Log::main.add((*it)->toString());
-		//}
-		//Log::main.add("\n");
 		if(list.size() > maxListCount)maxListCount = list.size();
 		
 		PathNode *node = *list.begin();
