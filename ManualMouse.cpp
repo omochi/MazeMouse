@@ -34,37 +34,34 @@ int windowMain(){
 	}
 	Mouse mouse(*maze);
 
-	bool firstFrame=true;
 	bool terminate=false;
 	bool doMove=false;
 	Direction moveDirection;
 
+	//1フレーム空回し
+	ungetch(' ');
+
 	while(!terminate){
 		doMove=false;
 
-		if(firstFrame){
-			firstFrame=false;
-		}else{
-			int ch=getch();
-			switch(ch){
-				case ERR:
-				case 'q':
-					terminate=true;
-					break;
-				case 'h':
-				case 'j':
-				case 'k':
-				case 'l':
-					doMove=true;
-					moveDirection=keyToDirection(ch);
-					break;
-			}
+		int ch=getch();
+		switch(ch){
+			case ERR:
+			case 'q':
+				terminate=true;
+				break;
+			case 'h':
+			case 'j':
+			case 'k':
+			case 'l':
+				doMove=true;
+				moveDirection=keyToDirection(ch);
+				break;
 		}
 
 		if(doMove){
 			mouse.moveWithDirection(moveDirection);
 		}
-		firstFrame=false;
 		
 		MazePathSearcher searcher(mouse.learnedMaze(),mouse.pos(),mouse.learnedMaze().goal());
 		const MazeCellNode * goal = dynamic_cast<const MazeCellNode *>(searcher.goal());	
