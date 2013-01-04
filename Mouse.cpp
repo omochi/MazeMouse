@@ -45,4 +45,14 @@ void Mouse::turnRight(){
 	learnMaze();
 }
 
-
+void Mouse::moveWithDirection(Direction d){
+	if(m_direction == d){
+		goStraight();
+	}else if(DirectionRotate(m_direction,DirectionLeft)==d){
+		turnLeft();
+	}else if(DirectionRotate(m_direction,DirectionRight)==d){
+		turnRight();
+	}else{
+		turnLeft();
+	}
+}

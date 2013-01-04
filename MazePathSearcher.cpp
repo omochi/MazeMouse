@@ -25,12 +25,12 @@ std::vector<PathNode *> MazePathSearcher::nodeNeighbors(const PathNode &node){
 	
 	std::vector<PathNode *>neighbors;
 
-	Direction directions[] = {DirectionLeft,DirectionTop,DirectionRight,DirectionBottom};
+	Direction direction=DirectionLeft;
 	for(int i=0;i<4;i++){
-		Direction direction = directions[i];
 		if(!m_maze.existsWall(cellNode.pos,direction)){
 			neighbors.push_back(&nodeAtPoint(cellNode.pos.neighbor(direction)));
 		}
+		direction=DirectionRotate(direction,DirectionLeft);
 	}
 	
 	return neighbors;

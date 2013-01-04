@@ -13,6 +13,16 @@
 
 std::string path;
 
+Direction keyToDirection(char k){
+	switch(k){
+		case 'h':return DirectionLeft;
+		case 'j':return DirectionBottom;
+		case 'k':return DirectionTop;
+		case 'l':return DirectionRight;
+	}
+	return DirectionLeft;
+}
+
 int windowMain(){
 	Viewer viewer;
 	std::ifstream ifs(path.c_str());
@@ -41,35 +51,17 @@ int windowMain(){
 					terminate=true;
 					break;
 				case 'h':
-					doMove=true;
-					moveDirection=DirectionLeft;
-					break;
 				case 'j':
-					doMove=true;
-					moveDirection=DirectionBottom;
-					break;
 				case 'k':
-					doMove=true;
-					moveDirection=DirectionTop;
-					break;
 				case 'l':
 					doMove=true;
-					moveDirection=DirectionRight;
+					moveDirection=keyToDirection(ch);
 					break;
 			}
 		}
 
 		if(doMove){
-			if(mouse.direction()==moveDirection){
-				mouse.goStraight();
-			}else if(DirectionRotate(mouse.direction(),DirectionLeft)==moveDirection){
-				mouse.turnLeft();
-			}else if(DirectionRotate(mouse.direction(),DirectionRight)==moveDirection){
-				mouse.turnRight();
-			}else{
-				mouse.turnLeft();
-			}
-
+			mouse.moveWithDirection(moveDirection);
 		}
 		firstFrame=false;
 		

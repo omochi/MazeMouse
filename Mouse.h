@@ -39,4 +39,8 @@ class Mouse{
 		//一発で反対側を向くのは無理とする
 		void turnRight();
 		void turnLeft();
+		
+		//向きに応じて上のどれかをする
+		void moveWithDirection(Direction d);
+
 };
