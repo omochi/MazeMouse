@@ -110,7 +110,9 @@ int windowMain(){
 		move(0,0);
 		printw("%s\n",viewer.printWorld(mouse.learnedMaze(),&mouse,searcher.foundCellNodePath()).c_str());
 
-		printw("move:hjkl,quit:q\n");
+		if(!autoDriven){
+			printw("move:hjkl,quit:q\n");
+		}
 
 		printw("%s\n",Log::main.buf().c_str());
 		Log::main.clear();
