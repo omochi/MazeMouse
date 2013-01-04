@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <ncurses.h>
+#include <string>
 #include <iostream>
 #include <fstream>
 
@@ -13,6 +14,7 @@
 #include "Log.h"
 
 std::string path;
+std::ofstream dumpOfs;
 
 Direction keyToDirection(char k){
 	switch(k){
@@ -22,6 +24,19 @@ Direction keyToDirection(char k){
 		case 'l':return DirectionRight;
 	}
 	return DirectionLeft;
+}
+
+std::string captureWindow(){
+	std::string str;
+	char buf[1024];
+	int w,h;
+	getmaxyx(stdscr,h,w);
+	for(int i=0;i<h;i++){
+		mvinnstr(i,0,buf,sizeof(buf)-1);
+		str.append(buf);
+		str.append("\n");
+	}
+	return str;
 }
 
 int windowMain(){
@@ -34,6 +49,8 @@ int windowMain(){
 	}
 	Mouse mouse(*maze);
 
+	char buf[256];
+	int frameCount = 0;
 	bool terminate=false;
 	bool doMove=false;
 	Direction moveDirection;
@@ -83,7 +100,15 @@ int windowMain(){
 		printw("%s\n",Log::main.buf().c_str());
 		Log::main.clear();
 
+		snprintf(buf,sizeof(buf),"frame=%d\n",frameCount);
+
+		dumpOfs << buf;
+		dumpOfs << captureWindow();
+		dumpOfs << "\n";		
+
 		refresh();
+	
+		frameCount++;
 	}
 
 	delete maze;
@@ -114,8 +139,10 @@ int main(int argc,char *argv[]){
 	path=std::string(argv[1]);
 
 	//ログ
-	std::ofstream logOs("log/ManualMouse.txt");
+	std::ofstream logOs("log/ManualMouseLog.txt");
 	Log::main.open(logOs);
+
+	dumpOfs.open("log/ManualMouseDump.txt");
 	
 	initscr();
 	cbreak();
