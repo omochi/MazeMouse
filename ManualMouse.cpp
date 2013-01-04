@@ -80,7 +80,7 @@ int windowMain(){
 			mouse.moveWithDirection(moveDirection);
 		}
 		
-		MazePathSearcher searcher(mouse.learnedMaze(),mouse.pos(),mouse.learnedMaze().goal());
+		MazePathSearcher searcher(mouse.learnedMaze(),mouse.pos(),mouse.learnedMaze().goal(),true);
 		const MazeCellNode * goal = dynamic_cast<const MazeCellNode *>(searcher.goal());	
 
 		clear();
@@ -89,14 +89,14 @@ int windowMain(){
 
 		printw("move:hjkl,quit:q\n");
 
-		if(searcher.found()){
-			printw("path found\n");
-			printw("%s\n",searcher.foundPathToString(searcher.foundCellNodePath()).c_str());
-		}else{
-			printw("path not found\n");
-		}
+//		if(searcher.found()){
+//			printw("path found\n");
+//			printw("%s\n",searcher.foundPathToString(searcher.foundCellNodePath()).c_str());
+//		}else{
+//			printw("path not found\n");
+//		}
 		
-		printw("log\n");
+//		printw("log\n");
 		printw("%s\n",Log::main.buf().c_str());
 		Log::main.clear();
 

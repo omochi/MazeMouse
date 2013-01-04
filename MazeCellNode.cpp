@@ -4,7 +4,7 @@
 MazeCellNode::MazeCellNode(MazePathSearcher &_searcher):PathNode(_searcher){
 }
 
-MazePathSearcher & MazeCellNode::mazeSearcher() {
+MazePathSearcher & MazeCellNode::mazeSearcher() const{
 	return dynamic_cast<MazePathSearcher &>(searcher);
 }
 
@@ -23,7 +23,7 @@ std::vector<PathNode *> MazeCellNode::neighbors() {
 }
 
 int MazeCellNode::estimatedRemainingCost() const {
-	return 0;
+	return mazeSearcher().estimatedRemainingNodeCost(*this);
 }
 
 std::string MazeCellNode::toString() const{

@@ -8,6 +8,8 @@ PathSearcher::PathSearcher(){
 
 //AStar探索？
 void PathSearcher::searchShortestPath(PathNode &start,PathNode &goal){
+	char buf[1024];
+	
 	m_start = &start;
 	m_goal = &goal;
 	
@@ -17,13 +19,24 @@ void PathSearcher::searchShortestPath(PathNode &start,PathNode &goal){
 	start.cost= 0;
 	start.from = NULL;
 	list.push_back(&start);
-	
+
+	int step = 0;
+	int maxListCount = 0;
+
 	while(list.size()>0){
-		std::vector<PathNode *>::iterator begin = list.begin();
+		//snprintf(buf,sizeof(buf),"search step %03d:",step);
+		//Log::main.add(buf);
+		//for(std::vector<PathNode *>::iterator it = list.begin();
+		//		it!=list.end();it++){
+		//	Log::main.add((*it)->toString());
+		//}
+		//Log::main.add("\n");
+		if(list.size() > maxListCount)maxListCount = list.size();
+		
 		PathNode *node = *list.begin();
 		list.erase(list.begin(),list.begin()+1);
 		
-		if(node==&goal)return;
+		if(node==&goal)break;
 
 		std::vector<PathNode *> neighbors = node->neighbors();
 		for(std::vector<PathNode *>::iterator it = neighbors.begin();it!=neighbors.end();it++){
@@ -37,7 +50,11 @@ void PathSearcher::searchShortestPath(PathNode &start,PathNode &goal){
 		}
 		
 		std::sort(list.begin(),list.end(),PathSearchPred());
+		step++;
 	}
+
+	snprintf(buf,sizeof(buf),"search step:%d,max list count:%d",step,maxListCount);
+	Log::main.add(buf);
 
 	return;	
 }

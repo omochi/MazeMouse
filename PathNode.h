@@ -1,6 +1,7 @@
 #pragma once
 
 #include<vector>
+#include<string>
 
 class PathSearcher;
 
@@ -16,6 +17,7 @@ class PathNode{
 		//推定残りコスト
 		virtual int estimatedRemainingCost() const;
 		int estimatedScore() const;
+		virtual std::string toString() const{ return std::string(); }
 };
 
 class PathSearchPred{

@@ -13,7 +13,7 @@ class MazeCellNode : public PathNode{
 		
 		MazeCellNode(MazePathSearcher &_searcher);
 
-		MazePathSearcher &mazeSearcher();
+		MazePathSearcher &mazeSearcher() const;
 		virtual std::vector<PathNode *> neighbors();
 		virtual int estimatedRemainingCost() const;
 

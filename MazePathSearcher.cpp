@@ -1,8 +1,10 @@
 #include "MazePathSearcher.h"
+
+#include <stdlib.h>
 #include "MazeCellNode.h"
 #include "Log.h"
-MazePathSearcher::MazePathSearcher(const Maze &maze,const Point &start,const Point &goal):
-	m_maze(maze){
+MazePathSearcher::MazePathSearcher(const Maze &maze,const Point &start,const Point &goal,bool estimateEnabled):
+	m_maze(maze),m_estimateEnabled(estimateEnabled){
 	searchShortestPath(nodeAtPoint(start),nodeAtPoint(goal));
 }
 MazePathSearcher::~MazePathSearcher(){
@@ -45,3 +47,15 @@ std::string MazePathSearcher::foundPathToString(std::vector<MazeCellNode *>path)
 	}
 	return str;
 }
+
+
+int MazePathSearcher::estimatedRemainingNodeCost(const MazeCellNode &node)const{
+	if(m_estimateEnabled){
+		MazeCellNode *cellGoal = dynamic_cast<MazeCellNode *>(goal());
+		return abs(cellGoal->pos.x-node.pos.x)+abs(cellGoal->pos.y-node.pos.y);
+	}else{
+		return 0;
+	}	
+}
+
+
