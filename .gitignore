@@ -1,3 +1,5 @@
 *.o
 *.swp
 *.out
+log/*
+!log/.gitkeep

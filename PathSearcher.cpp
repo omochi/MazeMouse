@@ -1,13 +1,7 @@
 #include "PathSearcher.h"
 #include <algorithm>
 #include "PathNode.h"
-
-PathSearchPred::PathSearchPred(PathSearcher &searcher):m_searcher(searcher){
-}
-bool PathSearchPred::operator()(const PathNode *left,const PathNode *right){
-	return left->cost + m_searcher.nodeEstimatedRemainingCost(*left) < 
-		right->cost + m_searcher.nodeEstimatedRemainingCost(*right);
-}
+#include "Log.h"
 
 PathSearcher::PathSearcher(){
 }
@@ -31,7 +25,7 @@ void PathSearcher::searchShortestPath(PathNode &start,PathNode &goal){
 		
 		if(node==&goal)return;
 
-		std::vector<PathNode *> neighbors = nodeNeighbors(*node);
+		std::vector<PathNode *> neighbors = node->neighbors();
 		for(std::vector<PathNode *>::iterator it = neighbors.begin();it!=neighbors.end();it++){
 			if((*it)->found)continue;
 			
@@ -42,7 +36,7 @@ void PathSearcher::searchShortestPath(PathNode &start,PathNode &goal){
 			list.push_back(*it);
 		}
 		
-		std::sort(list.begin(),list.end(),PathSearchPred(*this));
+		std::sort(list.begin(),list.end(),PathSearchPred());
 	}
 
 	return;	

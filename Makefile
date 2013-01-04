@@ -9,6 +9,7 @@ OBJS = 	Point.o \
 		PathSearcher.o \
 		MazeCellNode.o \
 		MazePathSearcher.o \
+		Log.o \
 		Viewer.o 	
 
 all : MazeView ManualMouse

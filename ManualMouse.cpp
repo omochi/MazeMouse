@@ -10,6 +10,7 @@
 #include "Viewer.h"
 #include "MazeCellNode.h"
 #include "MazePathSearcher.h"
+#include "Log.h"
 
 std::string path;
 
@@ -80,6 +81,10 @@ int windowMain(){
 		}else{
 			printw("path not found\n");
 		}
+		
+		printw("log\n");
+		printw("%s\n",Log::main.buf().c_str());
+		Log::main.clear();
 
 		refresh();
 	}
@@ -111,6 +116,10 @@ int main(int argc,char *argv[]){
 
 	path=std::string(argv[1]);
 
+	//ログ
+	std::ofstream logOs("log/ManualMouse.txt");
+	Log::main.open(logOs);
+	
 	initscr();
 	cbreak();
 	noecho();

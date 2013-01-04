@@ -1,5 +1,6 @@
 #include "MazePathSearcher.h"
 #include "MazeCellNode.h"
+#include "Log.h"
 MazePathSearcher::MazePathSearcher(const Maze &maze,const Point &start,const Point &goal):
 	m_maze(maze){
 	searchShortestPath(nodeAtPoint(start),nodeAtPoint(goal));
@@ -10,41 +11,25 @@ MazePathSearcher::~MazePathSearcher(){
 	}
 }
 
+const Maze & MazePathSearcher::maze() const{
+	return m_maze;
+}
 
-MazeCellNode & MazePathSearcher::nodeAtPoint(const Point &pos){
+MazeCellNode & MazePathSearcher::nodeAtPoint(const Point &pos) {
 	if(m_nodes.find(pos)==m_nodes.end()){
-		MazeCellNode *cellNode = new MazeCellNode();
+		MazeCellNode *cellNode = new MazeCellNode(*this);
 		cellNode->pos = pos;
 		m_nodes.insert(std::pair<Point,MazeCellNode *>(pos,cellNode));	
 	}
 	return *m_nodes[pos];
-}	
-
-std::vector<PathNode *> MazePathSearcher::nodeNeighbors(const PathNode &node){
-	const MazeCellNode &cellNode = dynamic_cast<const MazeCellNode &>(node);
-	
-	std::vector<PathNode *>neighbors;
-
-	Direction direction=DirectionLeft;
-	for(int i=0;i<4;i++){
-		if(!m_maze.existsWall(cellNode.pos,direction)){
-			neighbors.push_back(&nodeAtPoint(cellNode.pos.neighbor(direction)));
-		}
-		direction=DirectionRotate(direction,DirectionLeft);
-	}
-	
-	return neighbors;
-}
-
-int MazePathSearcher::nodeEstimatedRemainingCost(const PathNode &node){
-	return 0;
 }
 
 std::vector<MazeCellNode *> MazePathSearcher::foundCellNodePath() const{
 	std::vector<MazeCellNode *> nodes;
 	std::vector<PathNode *>path = foundPath();
 	for(std::vector<PathNode *>::iterator it = path.begin();it!=path.end();it++){
-		nodes.push_back(dynamic_cast<MazeCellNode *>(*it));
+		MazeCellNode *node = dynamic_cast<MazeCellNode *>(*it);
+		nodes.push_back(node);
 	}
 	return nodes;
 }
@@ -56,11 +41,7 @@ std::string MazePathSearcher::foundPathToString(std::vector<MazeCellNode *>path)
 		if(it!=path.begin()){
 			str.append("->");
 		}
-		snprintf(buf,sizeof(buf),"{%s,%d+%d}",
-				(*it)->pos.toString().c_str(),
-				(*it)->cost,
-				nodeEstimatedRemainingCost(*dynamic_cast<PathNode *>(*it)));
-		str.append(buf);
+		str.append((*it)->toString());
 	}
 	return str;
 }

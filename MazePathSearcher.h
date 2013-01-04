@@ -18,13 +18,8 @@ class MazePathSearcher : public PathSearcher{
 		MazePathSearcher(const Maze &maze,const Point &start,const Point &goal);
 		virtual ~MazePathSearcher();
 	
+		const Maze & maze() const;
 		MazeCellNode & nodeAtPoint(const Point &pos);
-		virtual std::vector<PathNode *> nodeNeighbors(const PathNode &node);
-		virtual int nodeEstimatedRemainingCost(const PathNode &node);
-	
 		std::vector<MazeCellNode *> foundCellNodePath() const;
-
 		std::string foundPathToString(std::vector<MazeCellNode *>path);
-
-
 };

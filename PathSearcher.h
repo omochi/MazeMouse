@@ -19,19 +19,5 @@ class PathSearcher{
 		PathNode *goal() const;
 		bool found() const;
 		std::vector<PathNode *>foundPath() const;
-
-		virtual std::vector<PathNode *> nodeNeighbors(const PathNode &node)= 0;
-		//推定残りコスト
-		virtual int nodeEstimatedRemainingCost(const PathNode &node)= 0;	
-
-		//実コストと推定残りコストを合わせて比較
-		static bool nodeLessEstimatedScore(const PathNode &left,const PathNode &right);	
 };
 
-class PathSearchPred{
-	private:
-		PathSearcher &m_searcher;
-	public:
-		PathSearchPred(PathSearcher &searcher);
-		bool operator()(const PathNode *left,const PathNode *right);
-};

@@ -1,5 +1,6 @@
 #include "Viewer.h"
 #include <algorithm>
+#include "Log.h"
 
 std::string Viewer::printWorld(const Maze &maze,const Mouse *mouse) const{
 	return printWorld(maze,mouse,std::vector<MazeCellNode *>());
@@ -19,9 +20,9 @@ std::string Viewer::printWorld(const Maze &maze,const Mouse *mouse,std::vector<M
 			Point p(x,y);
 			Cell cell=maze.constCellAt(p);
 			str.append(cell.leftWall()?"|":" ");
-			
+		
 			std::vector<MazeCellNode *>::iterator pathIt = std::find_if(path.begin(),path.end(),
-					MazeCellNodePosPred(p)); 
+					MazeCellNodePosEquals(p)); 
 
 			if(mouse && mouse->pos().equals(p)){
 				switch(mouse->direction()){
